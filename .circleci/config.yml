@@ -1,22 +1,19 @@
-# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
-
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/2.0/orb-intro/
-orbs:
-  node: circleci/node@4.7
-
-
-jobs:
-  install-node-example:
+executors:
+  my-custom-executor:
     docker:
-      - image: 'cimg/base:stable'
+      - image: cimg/base:stable
+jobs:
+  my-job-name:
+
+    executor: my-custom-executor
     steps:
       - checkout
-      - node/install:
-          node-version: '16.13'
-      - run: node --version
+      - run: |
+          sudo apt install curl
+          curl localhost:8080/users
+
 workflows:
-  test_my_app:
+  my-custom-workflow:
     jobs:
-      - install-node-example
+      - my-job-name
