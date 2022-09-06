@@ -21,6 +21,7 @@ jobs:
       - checkout
       - run: |
           sudo apt install curl
+          ls *
           curl localhost:8080/users
 workflows:
   my-custom-workflow:
