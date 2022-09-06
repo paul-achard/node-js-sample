@@ -7,7 +7,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:latest
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - setup_remote_docker
