@@ -1,13 +1,9 @@
 version: 2.1
-executors:
-  my-custom-executor:
-    docker:
-      - image: cimg/base:stable
 jobs:
   build:
     working_directory: /app
     docker:
-      - image: cimg/node:18.8.0
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
@@ -15,20 +11,23 @@ jobs:
           name: Build docker file
           command: |
             docker build . -t app
-  my-job-name:
-    executor: my-custom-executor
+      - run:
+          name: Run docker
+          command: |
+            docker run -d --name instance app
+  tests:
+    docker:
+      - image: curlimages/curl:latest
     steps:
-      - checkout
-      - run: |
-          sudo apt install curl
-          ls *
-          node bin/www
-          sleep 5
-          curl localhost:8080/users
+      - run:
+          name: Do a curl
+          command: |
+            curl http://localhost:8080
+
 workflows:
-  my-custom-workflow:
+  my-workflow:
     jobs:
       - build
-      - my-job-name :
+      - tests:
           requires:
             - build
