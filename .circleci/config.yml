@@ -2,7 +2,7 @@ version: 2.1
 executors:
   my-custom-executor:
     docker:
-      - image: cimg/node:18.8.0
+      - image: docker:latest
 jobs:
   build:
     working_directory: /app
@@ -21,6 +21,7 @@ jobs:
       - checkout
       - run: |
           sudo apt install curl
+          ls *
           node bin/www
           sleep 5
           curl localhost:8080/users
