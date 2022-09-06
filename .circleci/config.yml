@@ -2,7 +2,7 @@ version: 2.1
 executors:
   my-custom-executor:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: cimg/base:stable
 jobs:
   build:
     working_directory: /app
@@ -31,4 +31,4 @@ workflows:
       - build
       - my-job-name :
           requires:
-           - build
+            - build
