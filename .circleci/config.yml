@@ -3,9 +3,19 @@ executors:
   my-custom-executor:
     docker:
       - image: cimg/base:stable
-jobs:
+jobs :
+  build :
+     working_directory: /app
+     docker:
+       - image: docker:latest
+      steps:
+         - checkout
+         - setup_remote_docker
+         - run:
+           name: Build docker file
+           command: |
+              docker build . -t app
   my-job-name:
-
     executor: my-custom-executor
     steps:
       - checkout
@@ -16,4 +26,5 @@ jobs:
 workflows:
   my-custom-workflow:
     jobs:
+      - build
       - my-job-name
