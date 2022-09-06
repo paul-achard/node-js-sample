@@ -12,9 +12,9 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-        name: Build docker file
-        command: |
-          docker build . -t app
+          name: Build docker file
+          command: |
+            docker build . -t app
   my-job-name:
     executor: my-custom-executor
     steps:
