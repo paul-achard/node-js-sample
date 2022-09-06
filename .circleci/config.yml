@@ -26,4 +26,6 @@ workflows:
   my-custom-workflow:
     jobs:
       - build
-      - my-job-name
+      - my-job-name :
+          requires:
+           - build
