@@ -1,0 +1,29 @@
+version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/base:stable
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:latest
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+        name: Build docker file
+        command: |
+          docker build . -t app
+  my-job-name:
+    executor: my-custom-executor
+    steps:
+      - checkout
+      - run: |
+          sudo apt install curl
+          curl localhost:8080/users
+workflows:
+  my-custom-workflow:
+    jobs:
+      - build
+      - my-job-name
